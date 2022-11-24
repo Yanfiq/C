@@ -207,6 +207,7 @@ void sortList(){
 
 void deleteData(){
     char del[50];
+    int found;
     printf("Data siapa yang ingin kamu hapus : "); scanf(" %[^\n]", &del);
     for(int i=0; i<total; i++){
         if(strcmp(del, student[i].nama)==0){
@@ -216,8 +217,9 @@ void deleteData(){
             total--;
             sortList();
             printf("Data berhasil dihapus :)\n");
+            found=1;
         }
-        else if((strcmp(del, student[i].nama)!=0)&&(i==(total-1))){
+        else if((strcmp(del, student[i].nama)!=0)&&(i==(total-1))&&found!=1){
             printf("Data mahasiswa tidak ditemukan :(\nPerhatikan penulisan nama!!!\n");
         }
         printf("Tekan ENTER untuk kembali ke menu...");
