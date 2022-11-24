@@ -244,12 +244,13 @@ void swapStr(char *str1, char *str2) {
 void editData(){
     char change[20];
     char name[20];
+    int found=0;
     enum editBio{
         Nama = 1,
-        NIM = 2,
-        Gender = 3,
-        Kota = 4,
-        Umur = 5,
+        NIM,
+        Gender,
+        Kota,
+        Umur,
     };
     int which;
     printf("================= EDIT BIO ====================\n");
@@ -279,14 +280,15 @@ void editData(){
                 printf("Operasi tidak dikenali !!!");
                 break;
             }
-            printf("Data berhasil diedit :)");
+            printf("Data berhasil diedit :)\n");
+            found=1;
         }
-        else if((strcmp(name, student[i].nama)!=0)&&(i==(total-1))){
-            printf("Data mahasiswa tidak ditemukan!!!\n");
-        }
-        printf("Tekan ENTER untuk kembali ke menu...");
-        while(getchar() != '\n');
-        getchar();
-        system("cls");
     }
+    if((strcmp(name, student[total-1].nama)!=0&&found==0)){
+        printf("Data mahasiswa tidak ditemukan!!!\n");
+    }
+    printf("Tekan ENTER untuk kembali ke menu...");
+    while(getchar() != '\n');
+    getchar();
+    system("cls");
 }
