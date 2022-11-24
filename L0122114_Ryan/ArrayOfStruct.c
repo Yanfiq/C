@@ -77,6 +77,7 @@ int main() {
             break;
         case update:
             updateDataDat();
+            break;
         case saveDat:
             saveDataDat();
             break;
