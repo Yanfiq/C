@@ -172,6 +172,7 @@ void deleteData(){
             for(int j=i; j<total; j++){
                 strcpy(student[j].nama, student[j+1].nama); strcpy(student[j].nim, student[j+1].nim); strcpy(student[j].gender, student[j+1].gender); strcpy(student[j].kota, student[j+1].kota); strcpy(student[j].umur, student[j+1].umur); 
             }
+            total--;
         }
         else if((strcmp(del, student[i].nama)!=0)&&(i==(total-1))){
             printf("Data mahasiswa tidak ditemukan!!!\nPerhatikan penulisan nama!!!");
