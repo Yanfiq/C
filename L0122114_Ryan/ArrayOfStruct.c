@@ -125,9 +125,11 @@ void exportTxt(){
     system("cls");
 }
 
+static char dirDat[100];
 void openData(){
     FILE *database;
-    database = fopen("student.dat", "r");
+    printf("Masukkan direktori file .dat yang ingin diimport\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
+    database = fopen(dirDat, "r");
     if (database != NULL){
         while(fread(&student[total], sizeof(person), 1, database) == 1 ) {
             total++;
@@ -145,15 +147,14 @@ void openData(){
     system("cls");
 }
 
-static char dirDat[100];
 void saveDataDat(){
     FILE *database;
-    printf("Masukkan direktori file .dat yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf("%s", &dirDat);
+    printf("Masukkan direktori file .dat yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
     database = fopen(dirDat, "w");
     if (database != NULL){
         fwrite(student, sizeof(person), total, database); 
         fclose(database);
-        printf("Data berhasil disimpan di %s", dirDat);
+        printf("Data berhasil disimpan di %s\n", dirDat);
     }
     else{
         printf("Error: file student.dat cannot be opened\n");
@@ -222,11 +223,11 @@ void deleteData(){
         else if((strcmp(del, student[i].nama)!=0)&&(i==(total-1))&&found!=1){
             printf("Data mahasiswa tidak ditemukan :(\nPerhatikan penulisan nama!!!\n");
         }
-        printf("Tekan ENTER untuk kembali ke menu...");
-        while(getchar() != '\n');
-        getchar();
-        system("cls");
     }
+    printf("Tekan ENTER untuk kembali ke menu...");
+    while(getchar() != '\n');
+    getchar();
+    system("cls");
 }
 
 void clearArray(){
