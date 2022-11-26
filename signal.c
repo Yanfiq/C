@@ -2,16 +2,15 @@
 #include <unistd.h>
 #include <signal.h>
 #include <process.h>
-void signanHandler();
-void sigillHandler();
+void signalHandler();
 
 int i;
 int line;
 int main( void ){
-    printf("I'll keep counting number\nGood luck to stopping me\n");
+    printf("I'll keep counting number\nGood luck stopping me\n");
     printf("Process ID : %d\n", getpid());
     start:
-    signal(SIGINT, signanHandler);
+    signal(SIGINT, signalHandler);
     sleep(1);
     printf("%-4d", i);
     i++;
@@ -23,12 +22,7 @@ int main( void ){
     goto start;
 }
 
-void signanHandler(){
+void signalHandler(){
     printf("\nHey, you can't stop me :)\n");
-    line=0;
-}
-
-void sigillHandler(){
-    printf("\nHey, that's illegal :)\n");
     line=0;
 }
