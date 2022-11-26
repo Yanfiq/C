@@ -113,12 +113,17 @@ void exportTxt(){
     printf("=================== EXPORT ======================\n");
     printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dir);
     txtfile = fopen(dir, "w");
-    fprintf(txtfile, "%3s %-20s%-9s%-11s%-11s%-2s\n", "No.", "Nama", "NIM", "Gender", "Kota", "Umur");
-    for (int i=0; i<total; i++) {
-        fprintf(txtfile, "%.2d. %-20s%-9s%-11s%-11s%-2s\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].kota, student[i].umur);
+    if(txtfile!=NULL){
+        fprintf(txtfile, "%3s %-20s%-9s%-11s%-11s%-2s\n", "No.", "Nama", "NIM", "Gender", "Kota", "Umur");
+        for (int i=0; i<total; i++) {
+            fprintf(txtfile, "%.2d. %-20s%-9s%-11s%-11s%-2s\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].kota, student[i].umur);
+        }
+        fclose(txtfile);
+        printf("Data berhasil diekspor ke %s :)\n", dir);
     }
-    fclose(txtfile);
-    printf("Data berhasil diekspor ke %s :)\n", dir);
+    else{
+        printf("Tidak ada direktori semacam itu :(\n");
+    }
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
@@ -135,13 +140,12 @@ void openData(){
             printf("%.2d. %-20s%-9s%-11s%-11s%-2s\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].kota, student[total].umur);
             total++;
         }
+        printf("Data berhasil diimport :)\n");
     }
     else{
-        printf("Error: file student.dat cannot be opened\n");
-        exit(1);
+        printf("Tidak ada direktori semacam itu :(\n");
     }
     fclose(database);
-    printf("Data berhasil diimport :)\n");
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
@@ -150,17 +154,16 @@ void openData(){
 
 void saveDataDat(){
     FILE *database;
-    printf("Masukkan direktori file .dat yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
+    printf("Masukkan direktori file .dat yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .dat akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirDat);
     database = fopen(dirDat, "w");
     if (database != NULL){
         fwrite(student, sizeof(person), total, database); 
-        fclose(database);
         printf("Data berhasil disimpan di %s\n", dirDat);
     }
     else{
-        printf("Error: file student.dat cannot be opened\n");
-        exit(1);
+        printf("Tidak ada direktori semacam itu :(\n");
     }
+    fclose(database);
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
@@ -173,12 +176,12 @@ void updateDataDat(){
     if (database != NULL){
         fwrite(student, sizeof(person), total, database); 
         fclose(database);
-        printf("Data di %s telah berhasil diupdate", dirDat);
+        printf("Data di %s telah berhasil diupdate\n", dirDat);
     }
     else{
-        printf("Error: file student.dat cannot be opened\n");
-        exit(1);
+        printf("Error: anda belum membuka file apapun\n");
     }
+    fclose(database);
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
