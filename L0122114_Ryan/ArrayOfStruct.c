@@ -132,6 +132,7 @@ void openData(){
     database = fopen(dirDat, "r");
     if (database != NULL){
         while(fread(&student[total], sizeof(person), 1, database) == 1 ) {
+            printf("%.2d. %-20s%-9s%-11s%-11s%-2s\n", (total+1),student[total].nama, student[total].nim, student[total].gender, student[total].kota, student[total].umur);
             total++;
         }
     }
