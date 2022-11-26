@@ -49,10 +49,10 @@ int main() {
         "\t|7. Update student.dat",
         "\t|8. Simpan data dalam file student.txt", 
         "\t|9. Simpan data dalam file student.dat",
-        "\t|10. Keluar dari program",
+        "\t|0. Keluar dari program",
         "\tApa yang ingin kamu lakukan : "); scanf("%d", &choice);
         system("cls");
-        if(choice==10){
+        if(choice==0){
             break;
         }
         switch (choice)
