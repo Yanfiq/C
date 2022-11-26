@@ -129,10 +129,10 @@ static char dirDat[100];
 void openData(){
     FILE *database;
     printf("Masukkan direktori file .dat yang ingin diimport\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
-    database = fopen(dirDat, "r");
+    database = fopen(dirDat, "rb+");
     if (database != NULL){
         while(fread(&student[total], sizeof(person), 1, database) == 1 ) {
-            printf("%.2d. %-20s%-9s%-11s%-11s%-2s\n", (total+1),student[total].nama, student[total].nim, student[total].gender, student[total].kota, student[total].umur);
+            printf("%.2d. %-20s%-9s%-11s%-11s%-2s\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].kota, student[total].umur);
             total++;
         }
     }

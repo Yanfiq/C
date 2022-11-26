@@ -1,5 +1,5 @@
-# include <stdio.h>
-# include <signal.h>
+#include <stdio.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <time.h>
 void signalHandler( int signalVa1ue );
