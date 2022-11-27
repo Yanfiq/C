@@ -118,12 +118,12 @@ void exportTxt(){
         for (int i=0; i<total; i++) {
             fprintf(txtfile, "%.2d. %-20s%-9s%-11s%-11s%-2s\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].kota, student[i].umur);
         }
-        fclose(txtfile);
         printf("Data berhasil diekspor ke %s :)\n", dir);
     }
     else{
         printf("Tidak ada direktori semacam itu :(\n");
     }
+    fclose(txtfile);
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
