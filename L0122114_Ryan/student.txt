@@ -1,0 +1,6 @@
+No. Nama                NIM      Gender     Kota       Umur
+01. ee                  ee       ee         ee         ee
+02. qq                  qq       qq         qq         qq
+03. rr                  rr       rr         rr         rr
+04. tt                  tt       tt         tt         tt
+05. ww                  ww       ww         ww         ww
