@@ -33,7 +33,8 @@ int main() {
             add,
             edit,
             delete,
-            clear,
+            cls
+,
             update,
             saveTxt,
             saveDat,
@@ -72,7 +73,7 @@ int main() {
         case delete:
             deleteData();
             break;
-        case clear:
+        case cls:
             clearArray();
             break;
         case update:
@@ -95,12 +96,14 @@ int main() {
 void addData(){
     int new;
     printf("Berapa total mahasiswa yang ingin didata : "); scanf("%u", &new);
+    system("cls");
     for(int i=total; i<total+new; i++){
-        printf("Nama : "); scanf(" %[^\n]", &student[i].nama);
-        printf("NIM : "); scanf("%s", &student[i].nim);
-        printf("Umur : "); scanf("%s", &student[i].umur);
-        printf("Kota : "); scanf("%s", &student[i].kota);
-        printf("Gender : "); scanf(" %[^\n]", &student[i].gender);
+        printf("======Siswa ke-%d=======\n", (total+1));
+        printf("Nama\t: "); scanf(" %[^\n]", &student[i].nama);
+        printf("NIM\t: "); scanf("%s", &student[i].nim);
+        printf("Umur\t: "); scanf("%s", &student[i].umur);
+        printf("Kota\t: "); scanf("%s", &student[i].kota);
+        printf("Gender\t: "); scanf(" %[^\n]", &student[i].gender);
         system("cls");
     }
     total+=new;

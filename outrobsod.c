@@ -1,21 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <unistd.h>
 
 int main() {
-    clock_t begin;
-    double time_spent;
-    unsigned int i;
+    system("d:");
     system("D:\\Tweaks\\outro\\computer-outro-fake-bsod\\fake-bsod-cmdver\\play.vbs");
-    begin = clock();
-    for (i=0;1;i++)
-        {
-        time_spent = (double)(clock() - begin) / CLOCKS_PER_SEC;
-        if (time_spent>=10){
-            system("D:\\Tweaks\\outro\\bsod.exe");
-        }
-        if (time_spent>=25.0)
-            system("start shutdown -s -t 0");
-        }
+    for (int i=12;i>=0;i--){
+        printf("Windows left the chat in %d second", i);
+        sleep(1);
+        system("cls");        
+    }
+    system("D:\\Tweaks\\outro\\BluescreenSimulator.exe --win10 -e "":)"" -m1 ""Your PC is running perfectly fine with no problems whatsoever."" -m2 ""There are no updates pending, and it does not need to restart.\nEnjoy your day!"" -sc ""Fun code: ALL_IS_WELL"" -oq");
+    for(int i=13; i>=0; i--){
+        sleep(1);
+    }
+    system("shutdown -s -t 0");
     return(0);
 }

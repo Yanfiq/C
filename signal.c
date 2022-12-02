@@ -10,8 +10,8 @@ int main( void ){
     printf("I'll keep counting number\nGood luck stopping me\n");
     printf("Process ID : %d\n", getpid());
     start:
-    signal(SIGINT, signalHandler);
     sleep(1);
+    signal(SIGINT, signalHandler);
     printf("%-4d", i);
     i++;
     line++;
@@ -23,6 +23,7 @@ int main( void ){
 }
 
 void signalHandler(){
+    signal(SIGINT, signalHandler);
     printf("\nHey, you can't stop me :)\n");
     line=0;
 }
