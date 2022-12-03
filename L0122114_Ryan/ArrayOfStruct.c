@@ -23,6 +23,7 @@ void clearArray();
 void swapStr(char *str1, char *str2);
 void sortList();
 void exportTxt();
+void clear_screen();
  
 int main() {
     while(1){
@@ -52,7 +53,7 @@ int main() {
         "\t|9. Simpan data dalam file student.dat",
         "\t|0. Keluar dari program",
         "\tApa yang ingin kamu lakukan : "); scanf("%d", &choice);
-        system("cls");
+        clear_screen();
         if(choice==0){
             break;
         }
@@ -96,7 +97,7 @@ int main() {
 void addData(){
     int new;
     printf("Berapa total mahasiswa yang ingin didata : "); scanf("%u", &new);
-    system("cls");
+    clear_screen();
     for(int i=total; i<total+new; i++){
         printf("======Siswa ke-%d=======\n", (i+1));
         printf("Nama\t: "); scanf(" %[^\n]", &student[i].nama);
@@ -104,7 +105,7 @@ void addData(){
         printf("Umur\t: "); scanf("%s", &student[i].umur);
         printf("Kota\t: "); scanf("%s", &student[i].kota);
         printf("Gender\t: "); scanf(" %[^\n]", &student[i].gender);
-        system("cls");
+        clear_screen();
     }
     total+=new;
     sortList();
@@ -130,7 +131,7 @@ void exportTxt(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
 }
 
 static char dirDat[100];
@@ -152,7 +153,7 @@ void openData(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
 }
 
 void saveDataDat(){
@@ -170,7 +171,7 @@ void saveDataDat(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
 }
 
 void updateDataDat(){
@@ -188,7 +189,7 @@ void updateDataDat(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
 }
 
 void printData(){
@@ -200,7 +201,7 @@ void printData(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
 }
 
 void sortList(){
@@ -234,7 +235,7 @@ void deleteData(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
 }
 
 void clearArray(){
@@ -300,5 +301,13 @@ void editData(){
     printf("Tekan ENTER untuk kembali ke menu...");
     while(getchar() != '\n');
     getchar();
-    system("cls");
+    clear_screen();
+}
+
+void clear_screen(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }
