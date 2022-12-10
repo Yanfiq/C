@@ -179,7 +179,6 @@ void updateDataDat(){
     database = fopen(dirDat, "w");
     if (database != NULL){
         fwrite(student, sizeof(person), total, database); 
-        fclose(database);
         printf("Data di %s telah berhasil diupdate\n", dirDat);
     }
     else{
