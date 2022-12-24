@@ -186,7 +186,7 @@ void openDataDat(){
     database = fopen(dirDat, "rb+");
     if (database != NULL){
         while(fread(&student[total], sizeof(person), 1, database) == 1 ) {
-            printf("%.2d. %-20s%-9s%-11s%-2s\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].IPK);
+            printf("%.2d. %-26s%-10s%-10s%-.2f\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].IPK);
             total++;
         }
         printf("Data berhasil diimport :)\n");
@@ -242,11 +242,13 @@ void openDataTxt(){
     FILE *txtfile;
     printf("=================== IMPORT TXT ======================\n");
     printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirTxt);
-    txtfile = fopen(dirTxt, "r");
+    txtfile = fopen(dirTxt, "w+");
     if(txtfile!=NULL){
-        printf("%3s %-20s%-9s%-11s%-2s\n", "No.", "Nama", "NIM", "Gender", "Umur");
+        printf("%3s %-20s%-10s%-10s%-2s\n", "No.", "Nama", "NIM", "Gender", "IPK");
+        fseek(txtfile, 49, SEEK_SET );
         for (int i=0; i<total; i++) {
-            fscanf(txtfile, "%.2d. %-20s%-9s%-11s%-11s%-2s\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
+            fscanf(txtfile, "%*s %-20s%-10s%-10s%-.2f\n",student[i].nama, student[i].nim, student[i].gender, &student[i].IPK);
+            printf("%.2d. %-20s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, &student[i].IPK);
         }
         printf("Data berhasil diimport dari %s :)\n", dirTxt);
     }
@@ -263,12 +265,13 @@ void openDataTxt(){
 void saveDataTxt(){
     FILE *txtfile;
     printf("=================== SAVE TXT ======================\n");
-    printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirTxt);
-    txtfile = fopen(dirTxt, "w");
+    printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); 
+    scanf(" %[^\n]", &dirTxt);
+    txtfile = fopen(dirTxt, "w+");
     if(txtfile!=NULL){
-        fprintf(txtfile, "%3s %-20s%-9s%-11s%-2s\n", "No.", "Nama", "NIM", "Gender", "Umur");
+        fprintf(txtfile, "%3s %-20s%-10s%-10s%-2s\n", "No.", "Nama", "NIM", "Gender", "Umur");
         for (int i=0; i<total; i++) {
-            fprintf(txtfile, "%.2d. %-20s%-9s%-11s%-11s%-2s\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
+            fprintf(txtfile, "%.2d. %-20s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
         }
         printf("Data berhasil diekspor ke %s :)\n", dirTxt);
     }
@@ -287,16 +290,15 @@ void updateDataTxt(){
     txtfile = fopen(dirTxt, "w");
     if(txtfile!=NULL)
     {
-        fprintf(txtfile, "%3s %-20s%-9s%-11s%-2s\n", "No.", "Nama", "NIM", "Gender", "IPK");
+        fprintf(txtfile, "%3s %-20s%-10s%-10s%-2s\n", "No.", "Nama", "NIM", "Gender", "IPK");
         for (int i=0; i<total; i++)
         {
-            fprintf(txtfile, "%.2d. %-20s%-9s%-11s%-11s%-1.f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
+            fprintf(txtfile, "%.2d. %-20s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
         }
-        printf("Data berhasil diekspor ke %s :)\n", dirTxt);
     }
     else
     {
-        printf("Tidak ada direktori semacam itu :(\n");
+        printf("Anda belum save file .txt samsek\n");
     }
     fclose(txtfile);
     printf("Tekan ENTER untuk kembali ke menu...");
