@@ -121,7 +121,7 @@ void clearArray(){
 void editData(){
     char changeStr[20];
     float changeNum;
-    char name[20];
+    char nim[10];
     int found=0;
     enum editBio{
         Nama = 1,
@@ -131,9 +131,9 @@ void editData(){
     };
     int which;
     printf("================= EDIT BIO ====================\n");
-    printf("Masukkan nama mahasiswa : "); scanf(" %[^\n]", &name);
+    printf("Masukkan NIM mahasiswa : "); scanf(" %[^\n]", &nim);
     for(int i=0; i<total; i++){
-        if(strcmp(name, student[i].nama)==0){
+        if(strcmp(nim, student[i].nim)==0){
             printf("1. Nama\n2. NIM\n3. Gender\n4. IPK\nApa yang ingin diedit : "); scanf("%d", &which);
             switch (which)
             {
@@ -168,7 +168,7 @@ void editData(){
             found=1;
         }
     }
-    if((strcmp(name, student[total-1].nama)!=0&&found==0)){
+    if((strcmp(nim, student[total-1].nim)!=0&&found==0)){
         printf("Data mahasiswa tidak ditemukan!!!\n");
     }
     printf("Tekan ENTER untuk kembali ke menu...");
@@ -344,40 +344,16 @@ int main() {
         }
         switch (choice)
         {
-        case importDat:
-            blank=0;
-            openDataDat();
-            break;
-        case importTxt:
-            blank=0;
-            openDataTxt();
-            break;
-        case add:
-            blank=0;
-            addData();
-            break;
-        case edit:
-            editData();
-            break;
-        case delete:
-            printData();
-            deleteData();
-            break;
-        case cls:
-            clearArray();
-            break;
-        case updateDat:
-            updateDataDat();
-            break;
-        case updateTxt:
-            updateDataTxt();
-            break;
-        case saveDat:
-            saveDataDat();
-            break;
-        case saveTxt:
-            saveDataTxt();
-            break;
+        case importDat: blank=0;                    openDataDat();  break;
+        case importTxt: blank=0;                    openDataTxt();  break;
+        case add:       blank=0;                    addData();      break;
+        case edit:                  printData();    editData();     break;
+        case delete:                printData();    deleteData();   break;
+        case cls:       blank=1;                    clearArray();   break;
+        case updateDat:                             updateDataDat();break;
+        case updateTxt:                             updateDataTxt();break;
+        case saveDat:                               saveDataDat();  break;
+        case saveTxt:                               saveDataTxt();  break;
         default:
             printf("Opsi tidak diketahui!!!");
             break;

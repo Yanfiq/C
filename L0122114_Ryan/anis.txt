@@ -1,0 +1,3 @@
+NIM      Nama Mahasiswa       Kelamin     IPK  
+L0122114 Ryan Fikri           Laki-laki  3.9  
+L0122116 Fikri Ryan           pria       3.6  
