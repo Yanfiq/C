@@ -1,0 +1,4 @@
+No. Nama                      NIM       Gender    IPK
+01. Fikri Ryan                L0122169  Laki-laki 3.60
+02. Ryan Fikri                L0122114  Laki-laki 3.80
+03. Zoro Aster                L0122112  Perempuan 4.00
