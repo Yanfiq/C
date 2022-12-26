@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-unsigned int total;
+unsigned int total=0;
 int blank=1;
 
 typedef struct personal{
-    char nama[26];
+    char nama[30];
     char nim[10];
     float IPK;
     char gender[10];
@@ -48,7 +48,7 @@ void sortList(){
 
 void printData(){
     sortList();
-    printf("%3s %-26s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
+    printf("%3s %-30s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
     for (int i=0; i<total; i++) {
         if(strcmp(student[i].gender, "L")==0||strcmp(student[i].gender, "l")==0||strcmp(student[i].gender, "Laki-laki")==0){
             strcpy(student[i].gender, "Laki-laki");
@@ -59,7 +59,7 @@ void printData(){
         else{
             strcpy(student[i].gender, "Undefined");
         }
-        printf("%.2d. %-26s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
+        printf("%.2d. %-30s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
     }
 }
 
@@ -85,9 +85,9 @@ void addData(){
 void deleteData(){
     char del[50];
     int found;
-    printf("Data siapa yang ingin kamu hapus : "); scanf(" %[^\n]", &del);
+    printf("Masukkan NIM yang datanya ingin kamu hapus : "); scanf(" %[^\n]", &del);
     for(int i=0; i<total; i++){
-        if(strcmp(del, student[i].nama)==0){
+        if(strcmp(del, student[i].nim)==0){
             float temp;
             for(int j=i; j<total; j++){
                 strcpy(student[j].nama, student[j+1].nama); strcpy(student[j].nim, student[j+1].nim); strcpy(student[j].gender, student[j+1].gender); 
@@ -119,7 +119,7 @@ void clearArray(){
 }
 
 void editData(){
-    char changeStr[20];
+    char changeStr[30];
     float changeNum;
     char nim[10];
     int found=0;
@@ -142,19 +142,12 @@ void editData(){
                 strcpy(student[i].nama, changeStr);
                 break;
             case NIM:
-                printf("Bagaimana seharusnya tertulis : "); scanf(" %[^\n]", &changeStr);
+                printf("Bagaimana seharusnya tertulis : "); scanf("%s", &changeStr);
                 strcpy(student[i].nim, changeStr);
                 break;
             case Gender:
-                char MoF[1];
-                printf("Bagaimana seharusnya tertulis (L/P) : "); scanf("%s", &MoF);
-                if(strcmp(MoF, "L")==0){
-                    strcpy(student[i].gender, "Laki-laki");
-                } else if(strcmp(MoF, "P")==0){
-                    strcpy(student[i].gender, "Perempuan");
-                } else{
-                    strcpy(student[i].gender, "Undefined");
-                }
+                printf("Bagaimana seharusnya tertulis (L/P) : "); scanf("%s", &changeStr);
+                strcpy(student[i].gender, changeStr);
                 break;
             case Ipk:
                 printf("Bagaimana seharusnya tertulis : "); scanf("%f", &changeNum);
@@ -184,8 +177,9 @@ void openDataDat(){
     printf("Masukkan direktori file .dat yang ingin diimport\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
     database = fopen(dirDat, "rb+");
     if (database != NULL){
+        printf("%3s %-30s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
         while(fread(&student[total], sizeof(person), 1, database) == 1 ) {
-            printf("%.2d. %-26s%-10s%-10s%-.2f\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].IPK);
+            printf("%.2d. %-30s%-10s%-10s%-.2f\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].IPK);
             total++;
         }
         printf("Data berhasil diimport :)\n");
@@ -226,7 +220,7 @@ void updateDataDat(){
         printf("Data di %s telah berhasil diupdate\n", dirDat);
     }
     else{
-        printf("Error: anda belum membuka file apapun\n");
+        printf("Anda belum save file .dat sama sekali, apanya yang mau diupdate :)\n");
     }
     fclose(database);
     printf("Tekan ENTER untuk kembali ke menu...");
@@ -239,6 +233,7 @@ void updateDataDat(){
 static char dirTxt[100];
 void openDataTxt(){
     FILE *txtfile;
+    static int new;
     printf("=================== IMPORT TXT ======================\n");
     printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirTxt);
     txtfile = fopen(dirTxt, "r");
@@ -248,19 +243,19 @@ void openDataTxt(){
         {
             if (chr == 'n')
                 {
-                    total++;
+                    new++;
                 }
             chr = getc(txtfile);
         }
         rewind(txtfile);
-        total--;
+        //new--;
         char none[5];
-        printf("%3s %-25s%-10s%-10s%-2s\n", "No.", "Nama", "NIM", "Gender", "IPK");
-        fseek(txtfile, 57, SEEK_SET );
-        for (int i=0; i<total; i++) {
-            fscanf(txtfile, "%3s %25[^\n] %s %s %f\n", none, student[i].nama, student[i].nim, student[i].gender, &student[i].IPK);
-            printf("%.2d. %-25s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, &student[i].IPK);
+        fseek(txtfile, 61, SEEK_SET );
+        for (int i=total; i<total+new; i++) {
+            fscanf(txtfile, "%3s %29[^\n] %s %s %f\n", none, student[i].nama, student[i].nim, student[i].gender, &student[i].IPK);
         }
+        total=total+new;
+        printData();
         printf("Data berhasil diimport dari %s :)\n", dirTxt);
     }
     else{
@@ -280,9 +275,9 @@ void saveDataTxt(){
     scanf(" %[^\n]", &dirTxt);
     txtfile = fopen(dirTxt, "w+");
     if(txtfile!=NULL){
-        fprintf(txtfile, "%3s %-27s%-10s%-10s%-2s\n", "No.", "Nama", "NIM", "Gender", "Umur");
+        fprintf(txtfile, "%3s %-30s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
         for (int i=0; i<total; i++) {
-            fprintf(txtfile, "%.2d. %-27s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
+            fprintf(txtfile, "%.2d. %-30s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
         }
         printf("Data berhasil diekspor ke %s :)\n", dirTxt);
     }
@@ -301,15 +296,16 @@ void updateDataTxt(){
     txtfile = fopen(dirTxt, "w");
     if(txtfile!=NULL)
     {
-        fprintf(txtfile, "%3s %-27s%-10s%-10s%-2s\n", "No.", "Nama", "NIM", "Gender", "IPK");
+        fprintf(txtfile, "%3s %-30s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
         for (int i=0; i<total; i++)
         {
-            fprintf(txtfile, "%.2d. %-27s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
+            fprintf(txtfile, "%.2d. %-30s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
         }
+        printf("Data di %s telah berhasil diupdate :)", dirTxt);
     }
     else
     {
-        printf("Anda belum save file .txt samsek\n");
+        printf("Anda belum save file .txt sama sekali, apanya yang mau diupdate :)\n");
     }
     fclose(txtfile);
     printf("Tekan ENTER untuk kembali ke menu...");

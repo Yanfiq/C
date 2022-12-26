@@ -1,2 +1,2 @@
 
-    int new;
+        char none[5];
