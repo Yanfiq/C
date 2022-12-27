@@ -174,6 +174,7 @@ void editData(){
 static char dirDat[100];
 void openDataDat(){
     FILE *database;
+    printf("=================== IMPORT DAT ======================\n");
     printf("Masukkan direktori file .dat yang ingin diimport\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
     database = fopen(dirDat, "rb+");
     if (database != NULL){
@@ -182,10 +183,11 @@ void openDataDat(){
             printf("%.2d. %-30s%-10s%-10s%-.2f\n", (total+1), student[total].nama, student[total].nim, student[total].gender, student[total].IPK);
             total++;
         }
-        printf("Data berhasil diimport :)\n");
+        printf("Data berhasil diimport dari %s :)\n", dirDat);
     }
     else{
         printf("Tidak ada direktori semacam itu :(\n");
+        blank=1;
     }
     fclose(database);
     printf("Tekan ENTER untuk kembali ke menu...");
@@ -233,7 +235,7 @@ void updateDataDat(){
 static char dirTxt[100];
 void openDataTxt(){
     FILE *txtfile;
-    static int new;
+    int new;
     printf("=================== IMPORT TXT ======================\n");
     printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirTxt);
     txtfile = fopen(dirTxt, "r");
@@ -248,7 +250,6 @@ void openDataTxt(){
             chr = getc(txtfile);
         }
         rewind(txtfile);
-        //new--;
         char none[5];
         fseek(txtfile, 61, SEEK_SET );
         for (int i=total; i<total+new; i++) {
@@ -260,6 +261,7 @@ void openDataTxt(){
     }
     else{
         printf("Tidak ada direktori semacam itu :(\n");
+        blank=1;
     }
     fclose(txtfile);
     printf("Tekan ENTER untuk kembali ke menu...");
@@ -301,7 +303,7 @@ void updateDataTxt(){
         {
             fprintf(txtfile, "%.2d. %-30s%-10s%-10s%-.2f\n", (i+1),student[i].nama, student[i].nim, student[i].gender, student[i].IPK);
         }
-        printf("Data di %s telah berhasil diupdate :)", dirTxt);
+        printf("Data di %s telah berhasil diupdate :)\n", dirTxt);
     }
     else
     {
@@ -327,13 +329,13 @@ int main() {
         };
         printf("%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s\n%s", 
         "\t======================== MENU ===========================",
-        "\t|1. Import data dari file .dat", "\t|7. Update student.dat",
-        "\t|2. Import data dari file .txt", "\t|8. Update student.txt",
-        "\t|3. Menambah data", "\t\t|9. Save as student.dat",
-        "\t|4. Edit data", "\t\t\t|10. Save as student.txt",
-        "\t|5. Hapus data", "\t\t\t|0. Keluar dari program",
+        "\t|1. Import data dari file .dat", "\t|7. Update student.dat\t|",
+        "\t|2. Import data dari file .txt", "\t|8. Update student.txt\t|",
+        "\t|3. Menambah data", "\t\t|9. Save as student.dat\t|",
+        "\t|4. Edit data", "\t\t\t|10. Save as student.txt|",
+        "\t|5. Hapus data", "\t\t\t|0. Keluar dari program\t|",
         "\t|6. Bersihkan struct",
-        "\tApa yang ingin kamu lakukan : "); scanf("%d", &choice);
+        "\t|Apa yang ingin kamu lakukan : "); scanf("%d", &choice);
         clear_screen();
         if(choice==0){
             break;
@@ -346,8 +348,8 @@ int main() {
         case edit:                  printData();    editData();     break;
         case delete:                printData();    deleteData();   break;
         case cls:       blank=1;                    clearArray();   break;
-        case updateDat:                             updateDataDat();break;
-        case updateTxt:                             updateDataTxt();break;
+        case updateDat:             printData();    updateDataDat();break;
+        case updateTxt:             printData();    updateDataTxt();break;
         case saveDat:                               saveDataDat();  break;
         case saveTxt:                               saveDataTxt();  break;
         default:
