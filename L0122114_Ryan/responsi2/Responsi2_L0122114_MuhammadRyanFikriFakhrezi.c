@@ -1,9 +1,18 @@
+/*
+Nama    : Muhammad Ryan Fikri Fakhrezi
+NIM     : L0122114
+Kelas   : C
+Angkatan: 2022
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 unsigned int total=0;
 int blank=1;
 
+//deklarasi array of struct yang berguna sebagai media penyimpanan sementara data mahasiswa
 typedef struct personal{
     char nama[30];
     char nim[10];
@@ -12,27 +21,26 @@ typedef struct personal{
 }person;
 person student[1000];
 
-//bersih-bersih terminal untuk multi platform
+//fungsi untuk bersih-bersih terminal untuk multi platform
 void clear_screen(){
-    #ifdef _WIN32
-        system("cls");
-    #else
+    #ifdef _WIN32 //jika OS yang digunakan merupakan windows, maka clear_screen akan menggunakan system("cls")
+        system("cls"); 
+    #else //jika OS yang digunakan selain windows, maka clear_screen akan menggunakan system("clear")
         system("clear");
     #endif
 }
 
-//ngotak-ngatik structure
-int strcmpWithNull(char *str1, char *str2){
-    if (str2[0] == '\0')
-        return -1;
-    return strcmp(str1, str2);
-}
+/*============================================================bagian ngotak-ngatik structure========================================================*/
+
+//fungsi ini digunakan untuk menukar isi antara dua variabel string
 void swapStr(char *str1, char *str2) {
     char temp[20];
     strcpy(temp, str1);
     strcpy(str1, str2);
     strcpy(str2, temp);
 }
+
+//fungsi ini digunakan untuk mengurutkan struct berdasarkan nama, algoritma yang digunakan adalah bubble sort
 void sortList(){
     for(int h=0; h<total; h++){
         for(int i=0; i<total-1-h; i++){
@@ -47,7 +55,7 @@ void sortList(){
 }
 
 void printData(){
-    sortList();
+    sortList(); //setiap fungsi printData dipanggi, fungsi ini akan selalu memanggil fungsi sortList untuk mengurutkan data berdasarkan alfabet
     printf("%3s %-30s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
     for (int i=0; i<total; i++) {
         if(strcmp(student[i].gender, "L")==0||strcmp(student[i].gender, "l")==0||strcmp(student[i].gender, "Laki-laki")==0){
@@ -63,9 +71,10 @@ void printData(){
     }
 }
 
+//fungsi yang digunakan untuk menambahkan data secara manual kedalam struct
 void addData(){
-    static unsigned int new;
-    static int current;
+    unsigned int new;
+    int current;
     current=total;
     printData();
     printf("Berapa total mahasiswa yang ingin didata : "); scanf("%u", &new);
@@ -82,23 +91,23 @@ void addData(){
     }
 }
 
+//fungsi yang digunakan untuk menghapus data yang diinginkan dari struct
 void deleteData(){
     char del[50];
     int found;
     printf("Masukkan NIM yang datanya ingin kamu hapus : "); scanf(" %[^\n]", &del);
-    for(int i=0; i<total; i++){
-        if(strcmp(del, student[i].nim)==0){
-            float temp;
-            for(int j=i; j<total; j++){
+    for(int i=0; i<total; i++){                     //program melakukan for loop terhadap seluruh struct
+        if(strcmp(del, student[i].nim)==0){         //jika ditemukan kecocokan antara NIM siswa dengan NIM yang dimaksud
+            float temp;                             //maka data siswa yang bersangkutan akan dihapus
+            for(int j=i; j<total; j++){             //dengan cara data siswa yang terletak disetelahnya akan dicopy ke lokasi dirinya
                 strcpy(student[j].nama, student[j+1].nama); strcpy(student[j].nim, student[j+1].nim); strcpy(student[j].gender, student[j+1].gender); 
                 temp = student[j].IPK;
                 student[j].IPK=student[j+1].IPK;
                 student[j].IPK=temp;
             }
-            total--;
-            sortList();
+            total--;    //setelah data dihapus, maka nilai total akan dikurangi satu
             printf("Data berhasil dihapus :)\n");
-            found=1;
+            found=1;    //dan mengubah nilai found menjadi satu supaya if dibawah tidak dijalankan
         }
         else if((strcmp(del, student[i].nama)!=0)&&(i==(total-1))&&found!=1){
             printf("Data mahasiswa tidak ditemukan :(\nPerhatikan penulisan nama!!!\n");
@@ -110,6 +119,7 @@ void deleteData(){
     clear_screen();
 }
 
+//fungsi ini digunakan untuk membersihkan seluruh struct dengan cara mengisi seluruh struct dengan data kosong
 void clearArray(){
     for(int i=0; i<total; i++){
         strcpy(student[i].nama, ""); strcpy(student[i].nim, ""); strcpy(student[i].gender, ""); student[i].IPK=0; 
@@ -118,6 +128,7 @@ void clearArray(){
     total=0;
 }
 
+//fungsi ini digunakan untuk mengedit isi struct
 void editData(){
     char changeStr[30];
     float changeNum;
@@ -132,7 +143,7 @@ void editData(){
     int which;
     printf("================= EDIT BIO ====================\n");
     printf("Masukkan NIM mahasiswa : "); scanf(" %[^\n]", &nim);
-    for(int i=0; i<total; i++){
+    for(int i=0; i<total; i++){                             //disini metode yang digunakan serupa dengan fungsi deleteData()
         if(strcmp(nim, student[i].nim)==0){
             printf("1. Nama\n2. NIM\n3. Gender\n4. IPK\nApa yang ingin diedit : "); scanf("%d", &which);
             switch (which)
@@ -170,12 +181,14 @@ void editData(){
     clear_screen();
 }
 
-//Bagian  file handling .dat
+/*=============================================bagian  file handling .dat=================================================*/
 static char dirDat[100];
+//fungsi dibawah digunakan untuk mengimport data dari file .dat yang sebelumnya dibuat oleh program ini
+//jika dianalogikan dengan ms office, fungsi ini serupa dengan fitur open
 void openDataDat(){
     FILE *database;
     printf("=================== IMPORT DAT ======================\n");
-    printf("Masukkan direktori file .dat yang ingin diimport\nContoh : D:\\konspro\\praktikum\\student.txt\n"); scanf(" %[^\n]", &dirDat);
+    printf("Masukkan direktori dan nama file .dat yang ingin diimport\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .dat akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirDat);
     database = fopen(dirDat, "rb+");
     if (database != NULL){
         printf("%3s %-30s%-10s%-10s%-3s\n", "No.", "Nama", "NIM", "Gender", "IPK");
@@ -196,9 +209,11 @@ void openDataDat(){
     clear_screen();
 }
 
+//fungsi dibawah ini digunakan untuk menyimpan data dalam bentuk binary ke file .dat
+//jika dianalogikan dengan ms office, fungsi ini serupa dengan fitur save as
 void saveDataDat(){
     FILE *database;
-    printf("Masukkan direktori file .dat yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .dat akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirDat);
+    printf("Masukkan direktori dan nama file .dat yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.dat\nCatatan : secara default file .dat akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirDat);
     database = fopen(dirDat, "w");
     if (database != NULL){
         fwrite(student, sizeof(person), total, database); 
@@ -214,6 +229,8 @@ void saveDataDat(){
     clear_screen();
 }
 
+//fungsi ini digunakan untuk mengupdate file binary yang telah dibuat sebelumnya
+//jika dianalogikan dengan ms office, fungsi ini serupa dengan fitur save
 void updateDataDat(){
     FILE *database;
     database = fopen(dirDat, "w");
@@ -231,19 +248,21 @@ void updateDataDat(){
     clear_screen();
 }
 
-//bagian file handling file .txt
+/*============================================ bagian file handling file .txt =====================================*/
 static char dirTxt[100];
+//fungsi ini digunakan untuk mengimport data dari file .txt yang sebelumnya dibuat oleh program ini
+//jika dianalogikan dengan ms office, fungsi ini serupa dengan fitur open
 void openDataTxt(){
     FILE *txtfile;
     int new;
     printf("=================== IMPORT TXT ======================\n");
-    printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirTxt);
+    printf("Masukkan direktori dan nama file .txt yang anda ingin import\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt terletak di lokasi yang sama dengan file .c ini\n"); scanf(" %[^\n]", &dirTxt);
     txtfile = fopen(dirTxt, "r");
     if(txtfile!=NULL){
         char chr = getc(txtfile);
         while (chr != EOF)
         {
-            if (chr == 'n')
+            if (chr == '\n')
                 {
                     new++;
                 }
@@ -270,10 +289,12 @@ void openDataTxt(){
     clear_screen();
 }
 
+//fungsi ini digunakan untuk menyimpan struct dalam file teks
+//jika dianalogikan dengan ms office, fungsi ini serupa dengan fitur save as
 void saveDataTxt(){
     FILE *txtfile;
     printf("=================== SAVE TXT ======================\n");
-    printf("Masukkan direktori file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); 
+    printf("Masukkan direktor dan nama file .txt yang anda inginkan\nContoh : D:\\konspro\\praktikum\\student.txt\nCatatan : secara default file .txt akan disimpan di lokasi yang sama dengan file .c ini\n"); 
     scanf(" %[^\n]", &dirTxt);
     txtfile = fopen(dirTxt, "w+");
     if(txtfile!=NULL){
@@ -293,6 +314,8 @@ void saveDataTxt(){
     clear_screen();
 }
 
+//fungsi ini digunakan untuk mengupdate file teks
+//jika dianalogikan dengan ms office, fungsi ini serupa dengan fitur save
 void updateDataTxt(){
     FILE *txtfile;
     txtfile = fopen(dirTxt, "w");

@@ -1,7 +1,0 @@
-No. Nama                          NIM       Gender    IPK
-01. Ahmad Satyo Susilowati        L0122221  Laki-laki 4.50
-02. Aisyah Muezza Rahma           L0122196  Perempuan 4.30
-03. Almaas Izdihar Sant           L0122169  Laki-laki 4.20
-04. Muhammad Aspa Zikra           L0122105  Laki-laki 4.10
-05. Muhammad Ryan Fikri Fakhrezi  L0122114  Laki-laki 3.80
-06. Muhammad Zoro Aster           L0122112  Perempuan 4.00
