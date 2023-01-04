@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
-
 long long int bjorka_leak[100];
 int bjorka_leak_count = 0;
 int phone_num_change();

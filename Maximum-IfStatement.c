@@ -10,7 +10,7 @@ int main(void)
         max = a;
     }
     if(b>max){
-            max = b;
+        max = b;
     }
     printf("%d", max);
 }

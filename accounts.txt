@@ -1,3 +1,0 @@
-No.   First Name Last Name  NIM       Age   Grade 
-113   Udin       uh         L0122113  19    495   
-114   Ryan       Fikri      L0122114  18    0     
