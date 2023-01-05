@@ -1,3 +1,3 @@
 # C
 
-Cuma kumpulan kode dalam bahasa C, sori kalo kodenya barbar
+Just a bunch of code in C language made by me
