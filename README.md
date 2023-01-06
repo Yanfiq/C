@@ -1,3 +1,3 @@
-# C
+# C for Cursed
 
-Cuma kumpulan kode dalam bahasa C, sori kalo kodenya barbar
+Just a bunch of cursed code in C language made by me
